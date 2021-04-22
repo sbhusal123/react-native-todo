@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Alert } from "react-native";
+import {
+    StyleSheet,
+    View,
+    FlatList,
+    Alert,
+    TouchableWithoutFeedback,
+    Keyboard
+} from "react-native";
 
 import Header from "./components/Header";
 import TodoItem from "./components/TodoItem";
@@ -28,30 +35,32 @@ export default function App() {
             });
         } else {
             Alert.alert("Oops!", "Todos Must be three over 3 chars.", [
-                { text: "Understood", onPress: () => console.log("asd") }
+                { text: "Understood" }
             ]);
         }
     };
 
     return (
-        <View style={styles.container}>
-            <Header />
-            <View style={styles.content}>
-                <AddTodo submitHandler={submitHandler} />
-                <View style={styles.list}>
-                    <FlatList
-                        data={todos}
-                        renderItem={({ item }) => (
-                            <TodoItem
-                                item={item}
-                                key={item.key}
-                                pressHandler={pressHandler}
-                            />
-                        )}
-                    />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={styles.container}>
+                <Header />
+                <View style={styles.content}>
+                    <AddTodo submitHandler={submitHandler} />
+                    <View style={styles.list}>
+                        <FlatList
+                            data={todos}
+                            renderItem={({ item }) => (
+                                <TodoItem
+                                    item={item}
+                                    key={item.key}
+                                    pressHandler={pressHandler}
+                                />
+                            )}
+                        />
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     );
 }
 
